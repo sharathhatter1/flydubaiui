@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Fly Dubai Assignment">
+    <listeners>
+        <listener class-name="web.listeners.AllureReportListeners"/>
+    </listeners>
+    <test name="FlyDubai Smoke Tests">
+        <classes>
+            <class name="web.tests.smoke.FlightTicketBooking"/>
+        </classes>
+    </test>
+</suite>

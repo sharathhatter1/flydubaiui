@@ -1,0 +1,53 @@
+plugins {
+    id 'java'
+}
+
+group 'com.fd'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+def suite1 = project.hasProperty("suite1")
+test {
+    useTestNG() {
+        dependsOn cleanTest
+        useDefaultListeners = true
+
+        if(suite1) {
+            suites "src/test/resources/testng.xml"
+        }
+        testLogging {
+            exceptionFormat "full"
+            events"started", "skipped", "passed", "failed"
+            showStandardStreams true
+        }
+
+        /* if(suite2) {
+             suites "src/test/resources/advancedSuite.xml"
+         }*/
+    }
+}
+
+dependencies {
+    /*testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+   testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'*/
+
+    // https://mvnrepository.com/artifact/org.testng/testng
+    implementation 'org.testng:testng:7.6.1'
+
+    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api
+    implementation 'org.apache.logging.log4j:log4j-api:2.17.1'
+
+    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core
+    implementation 'org.apache.logging.log4j:log4j-core:2.17.1'
+
+    // https://mvnrepository.com/artifact/io.qameta.allure/allure-maven
+    implementation 'io.qameta.allure:allure-maven:2.11.2'
+
+    // https://mvnrepository.com/artifact/io.qameta.allure/allure-testng
+    implementation 'io.qameta.allure:allure-testng:2.18.1'
+
+    // https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin
+    implementation 'org.apache.maven.plugins:maven-surefire-plugin:3.0.0-M5'
+}

@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+}
+
+group 'com.fd'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    /* testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'*/
+}
+
+jar {
+    manifest {
+        attributes "fd-af": "com.fd.af"
+    }
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+test {
+    useTestNG()
+}

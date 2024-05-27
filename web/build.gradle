@@ -1,0 +1,67 @@
+plugins {
+    id 'java'
+    id 'java-library'
+    id "io.qameta.allure" version "2.10.0"
+}
+group 'com.fd'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
+
+    // https://mvnrepository.com/artifact/org.testng/testng
+    implementation 'org.testng:testng:7.6.1'
+
+    // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
+    implementation 'org.seleniumhq.selenium:selenium-java:4.6.0'
+
+    // https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager
+    implementation 'io.github.bonigarcia:webdrivermanager:5.5.3'
+
+    // https://mvnrepository.com/artifact/com.paulhammant/ngwebdriver
+    implementation 'com.paulhammant:ngwebdriver:1.2'
+
+    // https://mvnrepository.com/artifact/io.qameta.allure/allure-maven
+    implementation 'io.qameta.allure:allure-java-commons:2.18.1'
+
+    // https://mvnrepository.com/artifact/io.qameta.allure/allure-selenide
+    implementation 'io.qameta.allure:allure-selenide:2.18.1'
+
+    // https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin
+    implementation 'org.apache.maven.plugins:maven-surefire-plugin:3.0.0-M5'
+
+    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api
+    implementation 'org.apache.logging.log4j:log4j-api:2.19.0'
+
+    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core
+    implementation 'org.apache.logging.log4j:log4j-core:2.19.0'
+
+
+    testImplementation 'io.qameta.allure:allure-testng:2.8.1'
+    testImplementation 'io.qameta.allure:allure-commandline:2.8.1'
+    testImplementation 'io.qameta.allure:allure-java-commons:2.18.1'
+
+
+    implementation project(':core')
+}
+
+tasks.withType(Test) {
+
+    useTestNG() {
+        if(System.getProperty("RunType") == "smoke") {
+            suites 'src/test/resources/testng/testng.xml'
+        }
+    }
+            systemProperty 'browser', System.getProperty('browser', 'chrome')
+            systemProperty 'RunType', System.getProperty('RunType', 'smoke')
+            testLogging {
+                exceptionFormat "full"
+                events "passed", "failed"
+                showStandardStreams true
+            }
+        }
